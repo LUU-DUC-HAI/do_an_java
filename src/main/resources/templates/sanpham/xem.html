@@ -1,0 +1,153 @@
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h2>Chi tiết Sản Phẩm</h2>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label for="tenSanPham" class="form-label">Tên Sản Phẩm</label>
+                    <input type="text" class="form-control" id="tenSanPham" th:value="${dl.ten}" readonly />
+                </div>
+
+                <div class="mb-3 text-center">
+                    <label for="anh" class="form-label">Ảnh sản phẩm</label>
+                    <div>
+                        <img th:if="${dl.anh != null and !dl.anh.isEmpty()}" th:src="${dl.anh}" class="img-fluid border" id="anh" style="max-width: 200px; height: auto;" />
+                        <p th:if="${dl.anh == null or dl.anh.isEmpty()}" class="text-muted">Không có ảnh</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="moTa" class="form-label">Mô tả</label>
+                    <div id="moTa" class="form-control" style="height: auto; min-height: 100px; overflow-y: auto;" th:utext="${dl.moTa}"></div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="donGia" class="form-label">Đơn giá</label>
+                        <input type="text" class="form-control" id="donGia" th:value="${#numbers.formatDecimal(dl.donGia, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}" readonly />
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <label for="trangThai" class="form-label">Trạng thái</label>
+                        <input type="text" class="form-control" id="trangThai" th:value="${dl.trangThai ? 'Hoạt động' : 'Không hoạt động'}" readonly />
+                    </div> -->
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="ngayTao" class="form-label">Ngày tạo</label>
+                        <input type="text" class="form-control" id="ngayTao" th:value="${dl.ngayTaoVi}" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ngaySua" class="form-label">Ngày sửa</label>
+                        <input type="text" class="form-control" id="ngaySua" th:value="${dl.ngaySuaVi}" readonly />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="choPhep" th:checked="${dl.choPhep}" disabled />
+                            <label class="form-check-label" for="choPhep">Cho Phép</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="noiBat" th:checked="${dl.noiBat}" disabled />
+                            <label class="form-check-label" for="noiBat">Nổi bật</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="banChay" th:checked="${dl.banChay}" disabled />
+                            <label class="form-check-label" for="banChay">Bán chạy</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div style="overflow: auto;">
+                    <a class="ui button primary" 
+                       style="float: right;" 
+                       th:href="@{/qdl/sanpham/sua/{id}(id=${dl.id})}">Sửa</a>
+    
+                    <a class="ui button" 
+                       style="float: right; margin-right: 10px;" 
+                       th:href="@{/qdl/sanpham}">Quay Lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .card {
+        background-color: #f8f9fa; /* Lighten the card background */
+    }
+
+    .card-header {
+        background-color: #e9ecef; /* Light background for header */
+        color: #ef1414; /* Darker text for contrast */
+    }
+
+    .form-control {
+        background-color: #ffffff; /* White background for inputs */
+        border: 1px solid #ced4da; /* Light border */
+        color: #ef1414; /* Dark text color */
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle focus effect */
+    }
+
+    .form-check-label {
+        color: #ef1414; /* Darker label for better contrast */
+    }
+
+    .form-check-input {
+        border-color: #44cede; /* Slightly darker checkboxes */
+    }
+
+    .card-body img {
+        border-color: #44cede; /* Lighten the border of the image */
+    }
+
+    a.ui.button.primary {
+        background-color: #007bff; /* Brighter primary button */
+        color: white; 
+        border-radius: 5px;
+    }
+
+    a.ui.button {
+        background-color: #44cede; /* Light grey secondary button */
+        color: white; 
+        border-radius: 5px;
+    }
+
+    a.ui.button:hover {
+        background-color: #44cede; /* Slight hover effect */
+    }
+
+    /* Adjust the form layout for a cleaner look */
+    .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+
+    .text-center img {
+        border: 1px solid #ced4da; /* Light border for image */
+    }
+
+    .form-check-input:checked {
+        background-color: #007bff; /* Blue color for checked checkboxes */
+        border-color: #007bff;
+    }
+
+    /* Style for the 'Quay Lại' and 'Sửa' buttons container */
+    .button-container {
+        overflow: auto;
+        margin-top: 20px;
+    }
+</style>
+
+

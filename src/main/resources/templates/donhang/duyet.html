@@ -1,0 +1,113 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row" id="proBanner">
+      <div class="col-12">
+      </div>
+    </div>
+
+    <!-- <div class="modal" id="modalThem">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <i th:replace="donhang/them.html"></i>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="d-xl-flex justify-content-between align-items-start">
+      <h2 class="text-dark font-weight-bold mb-2">Danh Sách Đơn Hàng</h2>
+      <div class="d-sm-flex justify-content-xl-between align-items-center mb-2"></div>
+    </div>
+
+    <!-- <div class="ui container" style="margin-top: 20px;">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThem">
+        <i class="bi-plus-circle"></i>Thêm Mới Dơn Hàng
+      </button>
+
+      <script>
+        $('#modalThem').on('show.bs.modal', function (e) {
+          $(e.currentTarget).find('form').attr('action', '/qdl/donhang/them');
+        });
+      </script>
+
+      <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#filterBoxCollapsible">
+        <i class="bi-filter"></i>Lọc
+      </button> -->
+
+      <table class="ui striped celled table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Họ Tên Khách Hàng</th>
+            <th>Email</th>
+            <th>Số Điện Thoại</th>
+            <th>Mã Khách Hàng</th>
+            <th>Địa Chỉ</th>
+            <th>Ghi Chú</th>
+            <th>Tổng Tiền</th>
+            <th>Trạng Thái</th>
+            <th>Menu</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="dl : ${ds}">
+            <td th:text="${dl.id}"></td>
+            <td th:text="${dl.tenDayDu}"></td>
+            <td th:text="${dl.email}"></td>
+            <td th:text="${dl.phone}"></td>
+            <td th:text="${dl.maKhachHang}"></td>
+            <td th:text="${dl.diaChi}"></td>
+            <td th:text="${dl.ghiChu}"></td>
+            <td th:text="${dl.tongTien}"></td>
+            <td th:text="${dl.trangThai}"></td>
+
+            <td>
+              <a th:href="@{/qdl/donhang/xem(id=${dl.id})}" class="ui button positive">
+                <i class="eye icon"></i>Xem
+              </a>
+              &nbsp;
+              <a th:href="@{/qdl/donhang/sua(id=${dl.id})}" class="ui button yellow">
+                <i class="pencil icon"></i>Sửa
+              </a>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th colspan="8">
+              <div class="ui right floated pagination menu">
+                <a class="icon item">
+                  <i class="left chevron icon"></i>
+                </a>
+                <a class="item">1</a>
+                <a class="item">2</a>
+                <a class="item">3</a>
+                <a class="item">4</a>
+                <a class="icon item">
+                  <i class="right chevron icon"></i>
+                </a>
+              </div>
+
+              <div class="ui left floated" style="float: left">
+                Page 3 of 16 (91 items) &nbsp;
+                Page Size:
+                <select class="ui dropdown">
+                  <option>3</option>
+                  <option>5</option>
+                  <option>7</option>
+                </select>
+              </div>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

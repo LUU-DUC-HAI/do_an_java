@@ -1,0 +1,80 @@
+@charset "utf-8";
+body {
+    margin: 0;
+    padding: 0;
+}
+
+label,
+input,
+select,
+span,
+form img,
+button,
+form a[role="button"],
+textarea 
+{
+    display: block;
+    float: left;
+}
+
+label {
+    clear: left;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+input,
+select {
+    margin: 0 0 10px 0;
+}
+
+.clear_float {
+    clear: both;
+}
+
+fieldset {
+    background: lightgray;
+    border: 1px solid darkgray;
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+legend {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+form {
+    width: 60%;
+    margin: auto;
+}
+
+table {
+    margin: 30px auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    height: 30px;
+    background: lightgray;
+}
+
+th {
+    background: darkgray;
+    color: white;
+}
+
+th,
+td {
+    border: 1px solid white;
+    padding: 3px;
+}
+
+.error_msg {
+    background: pink;
+    border: 1px solid red;
+}
+

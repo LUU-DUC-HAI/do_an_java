@@ -1,0 +1,337 @@
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row" id="proBanner">
+      <div class="col-12">
+      </div>
+    </div>
+
+    <div class="d-xl-flex justify-content-between align-items-start">
+      <h2 class="text-dark font-weight-bold mb-2"> Danh Sách Nhà Sản Xuất </h2>
+      <div class="d-sm-flex justify-content-xl-between align-items-center mb-2"></div>
+    </div>
+
+    <!-- form them -->
+    <div class="modal" id="modalThem">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div th:replace="~{nhasanxuat/them.html}"></div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- form xem -->
+    <div class="modal" id="modalXem">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <!-- Content will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form Sửa  -->
+    <div class="modal" id="modalSua">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            Sử dụng Ajax để tải mã nguồn của thẻ Form Edit và đặt nó vào đây
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form Xóa  -->
+    <div class="modal" id="modalXoa">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"><i class="bi-trash"></i>Xác Nhận Xóa</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body: chú ý ràng buộc Controller Object vào Form -->
+          <div class="modal-body">
+            <form action="/qdl/nhasanxuat/xoa" method="post">
+              <input type="hidden" name="id" value="id của bản ghi mình cần xóa" />
+              <p>
+                Bạn có chắc muốn xóa ?
+              </p>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi-x"></i>Hủy</button>
+              <button type="submit" class="btn btn-danger"><i class="bi-trash"></i>Xóa</button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="ui container" style="margin-top: 20px;">
+      <a th:href="@{/qdl/nhasanxuat/them}"></a>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThem">
+        <i class="bi-plus-circle"></i>Thêm Nhà Sản Xuất
+      </button>
+      <script>
+        $('#modalThem').on('show.bs.modal', function (e) {
+          $(e.currentTarget).find('form').attr('action', '/qdl/nhasanxuat/them');
+        });
+      </script>
+
+      <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#filterBoxCollapsible">
+        <i class="bi-filter"></i>Lọc
+      </button>
+      <!-- <a href="#" class="ui primary button" th:href="@{/qdl/nhasanxuat/them}">Thêm Mới</a> -->
+      <table class="ui striped celled table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>
+              <a
+                th:href="@{'/qdl/nhasanxuat/phantrang/' + ${currentPage} +'?pageSize='+${pageSize} + '&sortField=ten&sortDir=' + ${reverseSortDir}}">
+                Tên Nhà Sản Xuất <i th:class="${sortDir}=='asc' ? 'bi-arrow-up' : 'bi-arrow-down'"></i>
+              </a>
+            </th>
+            <th>Ảnh</th>
+            <!-- <th>Thứ Tự</th> -->
+            <!-- <th>Mô Tả</th> -->
+            <th>Link</th>
+            <th>Cho Phép</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr th:each="dl : ${ds}" th:data-id="${dl.id}">
+
+            <td th:text="${dl.id}"></td>
+
+            <td th:text="${dl.ten}"></td>
+            <td>
+              <img th:src="${dl.anh}" style="height: 70px; width: 60px;" />
+            </td>
+            <!-- <td th:text="${dl.thuTu}"></td> -->
+            <!-- <td th:text="${dl.moTa}"></td> -->
+            <td th:text="${dl.link}"></td>
+            <td>
+              <div th:if="${dl.choPhep}">
+                <span class="ui label green" th:text="${dl.choPhepVi}"></span>
+              </div>
+              <div th:unless="${dl.choPhep}">
+                <span class="ui label red" th:text="${dl.getChoPhepVi()}"></span>
+              </div>
+            </td>
+
+            <td>
+              <!-- /nhasanxuat/xem/3 -->
+              <a type="button" class="btn btn-success" data-toggle="modal" data-target="#modalXem" href="#modalXem"
+                th:data-id="${dl.id}">
+                <i class="bi-plus-circle"></i>Xem
+              </a>
+
+              <script>
+                $('#modalXem').on('show.bs.modal', function (e) {
+                  var id = $(e.relatedTarget).data('id');
+                  $('#modalXem .modal-body').load("/qdl/nhasanxuat/xem?id=" + id); // Cập nhật đường dẫn
+                });
+              </script>
+
+              &nbsp;
+              <!-- /nhasanxuat/sua?id=3 -->
+              <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalSua"
+                th:data-id="${dl.id}">
+                <i class="bi-plus-circle"></i>Sửa
+              </a>
+
+              <script>
+                $('#modalSua').on('show.bs.modal', function (e) {
+                  var id = $(e.relatedTarget).data('id');
+                  $('#modalSua .modal-body').load("/qdl/nhasanxuat/suaajax?id=" + id);
+                });
+              </script>
+              &nbsp;
+              <!-- /nhasanxuat/xoa?id=3 -->
+              <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalXoa" href="#modalXoa"
+                th:data-id="${dl.id}">
+                <i class="bi-plus-circle"></i>Xóa
+              </a>
+              <script>
+                $('#modalXoa').on('show.bs.modal', function (e) {
+                  var id = $(e.relatedTarget).data('id');
+                  $(e.currentTarget).find('input[name="id"]').val(id);
+                });
+              </script>
+            </td>
+
+            <script>
+              $('#modalSua').on('show.bs.modal', function (e) {
+                var id = $(e.relatedTarget).data('id');
+                $('#modalSua .modal-body').load("/qdl/nhasanxuat/suaajax?id=" + id);
+              });
+            </script>
+        </tbody>
+
+        <script>
+          // kịch bản này phải xuất hiện sau bảng table
+          $.contextMenu({
+            selector: 'table.bs4 tr',
+            callback: function (key, options) {
+              var m = "clicked: " + key;
+              window.console && console.log(m) || alert(m);
+            },
+            items: {
+              add: {
+                name: "Add",
+                icon: "add",
+                callback: function (itemKey, opt, e) {
+                  $.get('/qdl/nhasanxuat/them/ajax/modal', content => {
+                    $(content).modal('show');
+                    $('.HtmlEditor').summernote();
+                  });
+                }
+              },
+              edit: {
+                name: "Edit",
+                icon: "edit",
+                callback: function (itemKey, opt, e) {
+                  var row_id = $(this).data('id'); // lấy ra mã định danh của dòng bị nhấp chuột phải
+                  $.get('/qdl/nhasanxuat/sua/ajax/modal?id=' + row_id, content => {
+                    $(content).modal('show');
+                    $('.HtmlEditor').summernote();
+                  });
+                }
+              },
+
+              delete: {
+                name: "Delete",
+                icon: "delete",
+                callback: function (itemKey, opt, e) {
+                  var row_id = $(this).data('id'); // lấy ra mã định danh của dòng bị nhấp chuột phải
+                  $.get('/qdl/nhasanxuat/xoa/ajax/modal?id=' + row_id, content => {
+                    $(content).modal('show');
+                  });
+                }
+              },
+              details: {
+                name: "Xem Chi Tiết",
+                icon: "fa-eye",
+                callback: function (itemKey, opt, e) {
+                  rowId = $(this).data('id');
+                  // Hiển thị Modal Thêm Mới
+                  $('#modalXem').modal();
+                  $('#modalXem .modal-body').load("/qdl/nhasanxuat/xem-ajax/" + rowId);
+
+                }
+              }
+            }
+          });
+
+          $('table.bs4 tr').on('click', function (e) {
+            console.log('clicked', this);
+          })
+        </script>
+      </table>
+
+      <!--Phân Trang Thật: bs4-->
+      <!--Phân Trang Thật: bs4-->
+<div style="overflow: auto;" th:fragment="someFragment">
+  <!--Báo Cáo Phân Trang-->
+  <nav class="float-left">
+      <ul class="pagination">
+          <li>
+              Trang số [[${currentPage}]] trên [[${totalPages}]] (tổng số: [[${totalItems}]] phần tử) &nbsp;
+          </li>
+      </ul>
+  </nav>
+
+  <!--Nút Phân Trang-->
+  <nav class="float-right">
+      <ul class="pagination justify-content-center">
+          <!-- Trang đầu: First, kí hiệu: |< -->
+          <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+              <a class="page-link"
+                  th:href="@{${linkPage}+1}">Đầu</a>
+          </li>
+
+          <!-- Trang trước đó: Previous, kí hiệu: [<<] -->
+          <li class="page-item" th:if="${currentPage > 1}" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+              <a class="page-link" th:href="@{${linkPage} + ${currentPage - 1}}">
+                  <i class="dripicons-chevron-left"></i>
+              </a>
+          </li>
+
+          <!-- Trang đầu tiên có đánh số: [1]-->
+          <li class="page-item" th:classappend="${currentPage == 1} ? 'active' : ''">
+              <a class="page-link"
+                  th:href="@{${linkPage}+1}">1</a>
+          </li>
+
+          <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+          <li class="page-item" th:if="${totalPages > 2} and ${currentPage > 4}">
+              <span class="page-link">...</span>
+          </li>
+
+          <!-- Các trang giữa [j][q][k] -->
+          <li class="page-item"
+              th:each="i : ${#numbers.sequence(currentPage > 3 ? currentPage - 1 : 2, currentPage < totalPages - 2 ? currentPage + 1 : totalPages - 1)}"
+              th:classappend="${currentPage == i} ? 'active' : ''" th:if="${totalPages > 2}">
+              <a class="page-link"
+                  th:href="@{${linkPage} + ${i}}">[[${i}]]</a>
+          </li>
+
+          <!-- Hiển thị "..." nếu cần và tổng số trang lớn hơn 2 -->
+          <li class="page-item" th:if="${totalPages > 2} and ${currentPage < totalPages - 3}">
+              <span class="page-link">...</span>
+          </li>
+
+          <!-- Trang cuối [N] -->
+          <li class="page-item" th:classappend="${currentPage == totalPages} ? 'active' : ''"
+              th:if="${totalPages > 1}">
+              <a class="page-link"
+                  th:href="@{${linkPage} + ${totalPages}}">[[${totalPages}]]</a>
+          </li>
+
+          <!-- Trang tiếp theo: Next, kí hiệu: [>>] -->
+
+          <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+              <a class="page-link" th:if="${currentPage < totalPages}"
+                  th:href="@{${linkPage} + ${currentPage + 1}}">
+                  <i class="dripicons-chevron-right"></i>
+              </a>
+          </li>
+
+          <!-- Trang chặn cuối, kí hiệu: >| -->
+          <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled' : ''">
+              <a class="page-link"
+                  th:href="@{${linkPage} + ${totalPages}}">Cuối</a>
+          </li>
+      </ul>
+  </nav>
+
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/dripicons@2.0.0/webfont/webfont.min.css" rel="stylesheet">
+    </div>
+
+  </div>
+
+</div>

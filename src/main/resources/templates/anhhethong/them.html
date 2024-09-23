@@ -1,0 +1,54 @@
+<div class="ui container">
+    <a class="ui button primary" href="/qdl/anhhethong">
+        <i class="icon arrow left"></i>Quay Lại Danh Sách</a>
+
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">
+                Form: Ảnh Hệ Thống
+            </h2>
+        </div>
+        <form method="post" enctype="multipart/form-data" th:action="@{/qdl/anhhethong/them}" th:object="${dl}"
+            class="ui form large segment anhhethong">
+
+            <input type="hidden" th:field="*{id}" disabled />
+
+            <div class="field">
+                <label>Upload Ảnh</label>
+                <input type="file" th:field="*{mtFile}" />
+            </div>
+
+            <div class="field">
+                <label>Tựa Đề</label>
+                <input type="text" th:field="*{tuaDe}" />
+            </div>
+
+            <div class="field">
+                <label>Mô Tả</label>
+                <textarea th:field="*{moTa}" cols="20" rows="3" class="content"></textarea>
+                <script>$('[name="moTa"]').richText();</script>
+            </div>
+
+            <div class="field">
+                <label>Thứ tự</label>
+                <input type="text" th:field="*{thuTu}" />
+            </div>
+
+            <div class="field inline">
+                <label>Cho Phép: </label>
+                <input type="checkbox" th:field="*{choPhep}" checked>
+            </div>
+
+
+            <!--trường nào không cho lên form, thì khi vào db sẽ bị trống-->
+
+
+
+            <div style="overflow: auto;">
+                <button type="submit" class="ui button primary right floated">Lưu</button>
+                <button type="reset" class="ui button right floated">Huỷ</button>
+            </div>
+
+        </form>
+    </div>
+</div>

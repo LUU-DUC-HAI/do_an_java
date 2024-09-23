@@ -1,0 +1,37 @@
+<form method="post" th:action="@{/lienhe/them}" th:object="${dl}"><!--XÓA KÍ TỰ TRẮNG sau đô la-->
+<!--CHÚ Ý SỬA CÁC th:field cho khớp với lớp thực thể trong tdl -->
+    <fieldset>
+        <legend>Tạo mới Liên Hệ</legend>
+
+        <label>Tên </label>
+        <input type="text" th:field="*{ten}" />
+
+        <label>Email</label>
+        <input type="text" th:field="*{email}" />
+
+        <label>Website</label>
+        <input type="text" th:field="*{webSite}" />
+
+        <label>Số Điện Thoại</label>
+        <input type="text" th:field="*{dienThoai}" />
+
+        <label>Địa Chỉ</label>
+        <input type="text" th:field="*{diaChi}" />
+
+        <label>Tiêu Đề</label>
+        <input type="text" th:field="*{tieuDe}" />
+
+        <label>Tin Nhắn</label>
+        <textarea th:field="*{tinNhan}" cols="20" rows="3"></textarea>
+
+        <!--trường nào không cho lên form, thì khi vào db sẽ bị trống-->
+
+<!-- <input type="hidden" th:field="*{Id}" /> -->
+        <!-- gỡ comment nếu là sửa: copy html này sang cho sua.html -->
+
+        <label>&nbsp;</label>
+        <button type="submit">Lưu</button>
+        <button type="reset">Huỷ</button>
+    </fieldset>
+
+</form>

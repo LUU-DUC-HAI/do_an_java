@@ -1,0 +1,105 @@
+<form method="post" action="/giohang/luu" th:object="${dh}" class="bg-light p-4 rounded shadow" style="margin-top: 200px;">
+    <h4 class="mb-4">Thông Tin Khách Hàng</h4>
+    <div class="form-group mb-3">
+        <label for="tenDayDu">Họ Tên</label>
+        <input type="text" class="form-control" id="tenDayDu" name="tenDayDu" required>
+    </div>
+    <div class="form-group mb-3">
+        <label for="diaChi">Địa Chỉ</label>
+        <input type="text" class="form-control" id="diaChi" name="diaChi" required>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="phone">Điện Thoại</label>
+        <input type="tel" class="form-control" id="phone" name="phone" 
+               required title="Chỉ nhập số" oninvalid="this.setCustomValidity('Vui lòng chỉ nhập số vào ô điện thoại.')" 
+               oninput="this.setCustomValidity('')">
+        <div class="invalid-feedback">Vui lòng chỉ nhập số vào ô điện thoại.</div>
+    </div>
+    
+    <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" required 
+               oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ email hợp lệ.')" 
+               oninput="this.setCustomValidity('')">
+        <div class="invalid-feedback">Vui lòng nhập địa chỉ email hợp lệ.</div>
+    </div>
+    
+    
+    <div class="form-group mb-3">
+        <label for="ghiChu">Ghi Chú</label>
+        <input type="text" class="form-control" id="ghiChu" name="ghiChu">
+    </div>
+
+    <input type="hidden" class="form-control" id="tongTien" name="tongTien" th:value="${#numbers.formatDecimal(tongGiaTriGioHang, 0, 0)}">
+    <input type="hidden" class="form-control" id="maKhachHang" name="maKhachHang" th:value="${maKhachHang}">
+    
+    <button class="btn btn-primary mt-3">Đặt Hàng</button>
+</form>
+
+<table id="cart" class="table table-striped table-hover table-condensed mt-4">
+    <thead>
+        <tr>
+            <th scope="col">Các Sản Phẩm </th>
+            <th scope="col">Tên Sản Phẩm </th>
+            <th scope="col">Đơn Giá </th>
+            <th scope="col">Số Lượng</th>
+            <th scope="col">Tổng Tiền</th>
+            <!-- <th scope="col">Xử Lý</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="sp : ${cartData}">
+            <th scope="row" class="align-middle">
+                <div class="d-flex align-items-center">
+                    <img th:src="${sp.get('anh')}" class="img-fluid me-3 rounded" style="width: 80px; height: 80px;" alt="">
+                </div>
+            </th>
+            <td class="product-title align-middle">
+                <h5>
+                    <a href="#" th:text="${sp.get('ten')}"></a>
+                </h5>
+            </td>
+            <td class="price-col align-middle" th:text="${sp.get('donGiaVi')}"></td>
+            <td class="quantity-col align-middle">
+                <div class="cart-product-quantity">
+                    <input type="number" class="form-control text-center" 
+                           th:value="${sp.get('soluong')}" 
+                           th:id="'soluong_sp_'+${sp.get('id')}" 
+                           min="1" max="10" step="1" data-decimals="0" required>
+                </div>
+            </td>
+            <td data-th="Subtotal" class="text-center align-middle" th:text="${sp.get('thanhTien')} + ' đ'"></td>
+        </tr>
+    </tbody>
+    
+    <tfoot>
+        <tr class="visible-xs">
+            <td colspan="3" class="text-right">Tổng tiền </td>
+            <!-- <td class="text-right"><strong>[[${tongGiaTriGioHangVi}]] đ</strong></td> -->
+            <td th:text="${tongGiaTriGioHangVi} + ' đ'"></td>
+        </tr>
+        <tr>
+            <td><a href="/trangchu" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></td>
+            <td class="hidden-xs">&nbsp;</td>
+            <td class="hidden-xs text-center">&nbsp;</td>
+            <td>
+                <!-- <a href="/donhang/them" class="btn btn-success btn-block">
+                    Xác Nhận Mua <i class="fa fa-angle-right"></i>
+                </a> -->
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<script>
+     document.getElementById('dienThoai').addEventListener('input', function () {
+        const value = this.value;
+        if (!/^\d*$/.test(value)) {
+            this.setCustomValidity('Vui lòng chỉ nhập số.');
+            this.classList.add('is-invalid');
+        } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+        }
+    });
+</script>

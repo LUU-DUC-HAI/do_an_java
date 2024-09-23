@@ -1,0 +1,49 @@
+<div class="ui container">
+    <a class="ui button primary" href="/qdl/loaisanpham">
+        <i class="icon arrow left"></i>Quay Lại Danh Sách
+    </a>
+
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">
+                Form Loại Sản Phẩm
+            </h2>
+        </div>
+        <form class="ui form large segment loai" method="post" th:action="@{/qdl/loaisanpham/sua}" th:object="${dl}">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="field">
+                <label>Mã Loại (phải tồn tại trong hệ thống) </label>
+                <input type="text" th:field="*{maLoai}" />
+            </div>
+
+            <div class="field">
+                <label>Mã Sản Phẩm (phải tồn tại trong hệ thống)</label>
+                <input type="text" th:field="*{maSanPham}" />
+            </div>
+
+            <br />
+            <div style="overflow: auto;">
+                
+                <button type="submit" class="ui button primary" style="float: right">
+                    <i class="icon save"></i>Lưu</button>
+                <button type="reset" class="ui button" style="float: right;margin-right: 10px;">
+                    <i class="icon undo"></i>Huỷ</button>
+                <a class="ui button positive" href="/qdl/loaisanpham" style="float: right;">
+                    <i class="icon arrow left"></i>Danh Sách
+                </a>
+            </div>
+
+            <div class="ui error message"></div>
+
+            <!-- </fieldset> -->
+
+        </form>
+    </div>
+</div>
+
+<script>
+
+
+</script>

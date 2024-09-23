@@ -1,0 +1,109 @@
+<form class="card" method="post" th:action="@{/qdl/sanpham/them}" th:object="${dl}">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>
+            <i class="bi bi-pencil"></i> Form Sản Phẩm
+        </h4>
+    </div>
+
+    <div class="card-body">
+        <input type="hidden" th:field="*{id}" disabled />
+
+        <div class="form-group">
+            <label for="tenSanPham">Tên Sản Phẩm</label>
+            <input type="text" id="tenSanPham" th:field="*{ten}" placeholder="Xoài Cát Hòa Lộc" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" id="model" th:field="*{model}" placeholder="Loại Xoài, Ngọt" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="donGia">Đơn Giá</label>
+            <input type="text" id="donGia" name="donGia" placeholder="30000" class="form-control" th:value="${#numbers.formatDecimal(dl.donGia, 0, 0)}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="moTa">Mô tả (SummerNote)</label>
+            <textarea id="moTa" th:field="*{moTa}" class="form-control HtmlEditor" placeholder="Mô tả chi tiết trái cây"></textarea>
+            <script>
+                $(function () {
+                    if($('.HtmlEditor').length){
+                        $('.HtmlEditor').summernote({
+                            height: 150
+                        });
+                    }
+                });
+            </script>
+        </div>
+
+        <div class="form-group">
+            <label for="tag">Tag</label>
+            <input type="text" id="tag" th:field="*{tag}" placeholder="xoai, tropical, fresh" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="anh">Ảnh</label>
+            <input type="text" id="anh" th:field="*{anh}" placeholder="http://anh.com/xoai.jpg" class="form-control"/>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Mã Nhà Sản Xuất</label>
+            <div class="col-sm-10">
+                <select class="form-control" th:field="*{maNhaSanXuat}">
+                    <option value="" disabled selected>Chọn Nhà Sản Xuất</option>
+                    <option th:each="nhaSanXuat : ${dsNhaSanXuat}" 
+                            th:value="${nhaSanXuat.id}" 
+                            th:text="${nhaSanXuat.ten}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <label for="maLoai">Mã Loại</label>
+            <div class="col-sm-10">
+                <select name="maLoai" required>
+                    <option value="">Chọn loại sản phẩm</option>
+                    <option th:each="loai : ${dsLoai}" th:value="${loai.id}" th:text="${loai.ten}"></option>
+                </select>
+                <!-- <select class="form-control" th:field="*{loai}">
+                    <option value="" disabled selected>Chọn Loại Sản Phẩm</option>
+                    <option th:each="loai : ${dsLoai}" th:value="${loai.id}" th:text="${loai.ten}"></option>
+                </select> -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ngayHetHan">Ngày Hết Hạn</label>
+            <input type="date" id="ngayHetHan" th:field="*{ngayHetHan}" class="form-control"/>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" id="choPhep" th:field="*{choPhep}" class="form-check-input"/>
+            <label for="choPhep" class="form-check-label">Cho Phép</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" id="noiBat" th:field="*{noiBat}" class="form-check-input"/>
+            <label for="noiBat" class="form-check-label">Nổi Bật</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" id="banChay" th:field="*{banChay}" class="form-check-input"/>
+            <label for="banChay" class="form-check-label">Bán Chạy</label>
+        </div>
+        
+
+        <br />
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i>&nbsp;Lưu</button>
+            <button type="reset" class="btn btn-secondary mx-2" ><i class="bi bi-reply"></i>&nbsp;Huỷ</button>
+            <a class="btn btn-outline-primary" href="/qdl/sanpham">
+                <i class="bi bi-list"></i>&nbsp;Danh Sách
+            </a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<thead>
+    <tr>
+        <th scope="col">Các Sản Phẩm</th>
+        <th scope="col">Tên Sản Phẩm</th>
+        <th scope="col">Đơn Giá</th>
+        <th scope="col">Số Lượng</th>
+        <th scope="col">Tổng Tiền</th>
+        <th scope="col">Xử Lý</th>
+    </tr>
+</thead>
+<tbody>
+    <tr th:each="sp : ${cartData}">
+        <td>
+            <div class="d-flex align-items-center">
+                <img th:src="${sp.get('anh')}" class="img-responsive img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+            </div>
+        </td>
+        <td class="product-title">
+            <h3>
+                <a href="#" th:text="${sp.get('ten')}"></a>
+            </h3>
+        </td>
+        <td class="price-col" th:text="${sp.get('donGiaVi')}"></td>
+        <td class="quantity-col">
+            <div class="cart-product-quantity">
+                <input type="number" class="form-control" 
+                       th:value="${sp.get('soluong')}" 
+                       th:id="'soluong_sp_' + ${sp.get('id')}" 
+                       min="1" max="10" step="1" data-decimals="0" required>
+            </div>
+        </td>
+        <td class="total-col" th:text="${sp.get('thanhTien')}"></td>
+        <td class="remove-col">
+            <button class="btn-remove" th:onclick="cart.remove([[${sp['id']}]], [[${sp['ten']}]])">
+                <i class="icon-close"></i>
+            </button>
+            <button class="btn-remove" 
+                    th:onclick="cart.update([[${sp.get('id')}]], $('#soluong_sp_' + ${sp.get('id')}).val(), [[${sp.get('ten')}]])">
+                <i class="icon-refresh"></i>
+            </button>
+        </td>
+    </tr>
+</tbody>
+
+
+--------------------------------------------------------------------------------------------

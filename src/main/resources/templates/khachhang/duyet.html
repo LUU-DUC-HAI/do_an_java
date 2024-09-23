@@ -1,0 +1,164 @@
+
+<div class="">
+  <div class="content">
+    <div class="">
+      <div class="col-12">
+      </div>
+    </div>
+    <div class="d-xl-flex justify-content-between align-items-start">
+      <h2 class="text-dark font-weight-bold mb-2" style="margin-left: 25px; margin-top: 20px;">Danh Sách Khách Hàng
+      </h2>
+      <div class="d-sm-flex justify-content-xl-between align-items-center mb-2"></div>
+    </div>
+    <div class="ui container" style="margin-top: 20px; margin-left: 25px;" th:href="@{/qdl/khachhang/them}">
+      <!-- <a href="#" class="ui primary button" th:href="@{/qdl/khachhang/them}">Thêm Mới</a> -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThem">
+        <i class="bi-plus-circle"></i>Thêm Khách Hàng
+      </button>
+
+      <script>
+        $('#modalThem').on('show.bs.modal', function (e) {
+          $(e.currentTarget).find('form').attr('action', '/qdl/khachhang/them');
+        });
+      </script>
+
+      <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#filterBoxCollapsible">
+        <i class="bi-filter"></i>Lọc
+      </button>
+
+      <table class="ui striped celled table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên Khách Hàng</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Cho Phép</th>
+            <!-- <th>Thứ Tự</th> -->
+            <th>Mật Khẩu</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr th:each="dl : ${ds}">
+
+            <td th:text="${dl.id}"></td>
+            <td th:text="${dl.ten}"></td>
+            <td th:text="${dl.email}"></td>
+            <td th:text="${dl.phone}"></td>
+            <td>
+              <div th:if="${dl.choPhep}">
+                <span class="ui label green" th:text="${dl.choPhepVi}"></span>
+              </div>
+              <div th:unless="${dl.choPhep}">
+                <span class="ui label red" th:text="${dl.getChoPhepVi()}"></span>
+              </div>
+            </td>
+            <!-- <td th:text="${dl.thuTu}"></td> -->
+            <td th:text="${dl.password}"></td>
+
+            <td>
+              <!-- /khachhang/xem/3 -->
+              <a th:href="@{/qdl/khachhang/xem(id=${dl.Id})}" class="ui button positive">
+                <i class="eye icon"></i>Xem
+              </a>
+              &nbsp;
+              <!-- /khachhang/sua?id=3 -->
+              <a th:href="@{/qdl/khachhang/sua(id=${dl.Id})}" class="ui button yellow">
+                <i class="pencil icon"></i>Sửa
+              </a>
+              &nbsp;
+              <!-- /khachhang/xoa?id=3 -->
+              <a th:href="@{/qdl/khachhang/xoa(id=${dl.Id})}" class="ui button negative">
+                <i class="trash icon"></i>Xóa
+              </a>
+
+            </td>
+
+          </tr>
+        </tbody>
+
+        <script>
+          // kịch bản này phải xuất hiện sau bảng table
+          $.contextMenu({
+            selector: 'table.bs4 tr',
+            callback: function (key, options) {
+              var m = "clicked: " + key;
+              window.console && console.log(m) || alert(m);
+            },
+            items: {
+              add: {
+                name: "Add",
+                icon: "add",
+                callback: function (itemKey, opt, e) {
+                  $.get('/qdl/khachhang/them/ajax/modal', content => {
+                    $(content).modal('show');
+                    $('.HtmlEditor').summernote();
+                  });
+                }
+              },
+              edit: {
+                name: "Edit",
+                icon: "edit",
+                callback: function (itemKey, opt, e) {
+                  var row_id = $(this).data('id'); // lấy ra mã định danh của dòng bị nhấp chuột phải
+                  $.get('/qdl/khachhang/sua/ajax/modal?id=' + row_id, content => {
+                    $(content).modal('show');
+                    $('.HtmlEditor').summernote();
+                  });
+                }
+              },
+
+              delete: {
+                name: "Delete",
+                icon: "delete",
+                callback: function (itemKey, opt, e) {
+                  var row_id = $(this).data('id'); // lấy ra mã định danh của dòng bị nhấp chuột phải
+                  $.get('/qdl/khachhang/xoa/ajax/modal?id=' + row_id, content => {
+                    $(content).modal('show');
+                  });
+                }
+              },
+              "sep1": "---------",
+              "cut": { name: "Cut", icon: "cut" },
+              "copy": { name: "Copy", icon: "copy" },
+              "paste": { name: "Paste", icon: "paste" },
+              "sep2": "---------",
+              "quit": {
+                name: "Quit", icon: function () {
+                  return 'context-menu-icon context-menu-icon-quit';
+                }
+              }
+            }
+          });
+
+          $('table.bs4 tr').on('click', function (e) {
+            console.log('clicked', this);
+          })
+        </script>
+
+        <!-- form them -->
+        <div class="modal" id="modalThem">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <div th:replace="~{khachhang/them.html}"></div>
+              </div>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="bi-x"></i>Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </table>
+    </div>
+
+  </div>
+
+
+</div>

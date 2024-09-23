@@ -1,0 +1,43 @@
+
+  <div style="background: green;" th:if="${THONG_BAO_OK}" th:text="${THONG_BAO_OK}">
+  </div>
+    
+<a href="#" role="button" class="primary" th:href="@{/lienhe/them}">Thêm Mới Liên Hệ</a>
+
+<table class="ui table celled">
+<thead>
+    <th>Tên</th>
+    <th>Email</th>
+    <th>Điện Thoại</th>
+    <th>Địa Chỉ</th>
+    <th>Website</th>
+    <th>Tiêu Đề</th>
+    <th>Tin Nhắn</th>
+    <th>Ngày Tạo</th>
+    <th>Ngày Sửa</th>
+    <th>Action</th>
+</thead>
+
+<tbody>
+    <tr th:each="dl : ${ds}">
+        <td th:text="${dl.ten}"></td>
+        <td th:text="${dl.email}"></td>
+        <td th:text="${dl.dienThoai}"></td>
+        <td th:text="${dl.diaChi}"></td>
+        <td th:text="${dl.webSite}"></td>
+        <td th:text="${dl.tieuDe}"></td>
+        <td th:text="${dl.tinNhan}"></td>
+        <td th:text="${dl.ngayTao}"></td>
+        <td th:text="${dl.ngaySua}"></td>
+        
+        <td>
+            <a th:href="@{/lienhe/xem/{id}(id=${dl.Id})}">Xem</a> <!-- /lienhe/xem/?id=3 -->
+            |
+            <a th:href="@{/lienhe/sua(id=${dl.Id})}">Sửa</a> <!-- /lienhe/sua/3 -->
+            |
+            <a th:href="@{/lienhe/xoa(id=${dl.Id})}">Xoá</a><!-- /lienhe/xoa/3 -->
+            
+        </td>
+    </tr>
+</tbody>	
+</table>

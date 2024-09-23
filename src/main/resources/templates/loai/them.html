@@ -1,0 +1,97 @@
+<div class="ui container">
+    <!-- <a class="ui button primary" href="/qdl/loai">
+        <i class="icon arrow left"></i>Quay Lại Danh Sách
+    </a> -->
+
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">
+                Form Loại, Danh Mục
+            </h2>
+        </div>
+        <form class="ui form large segment loai" method="post" th:action="@{/qdl/loai/them}" th:object="${dl}">
+
+            <input type="hidden" th:field="*{id}" disabled />
+
+            <div class="field">
+                <label>Tên Loại </label>
+                <input type="text" th:field="*{ten}" />
+            </div>
+
+            <div class="field">
+                <label>Mô tả (SummerNote)</label>
+                
+                <textarea th:field="*{moTa}" class="summernote"></textarea>
+                  
+                <script>
+                    $(function(){
+                        $('[name="moTa"]')
+                            .summernote({
+                                // cần tùy chỉnh thì viết vào đây
+                                height: 150,
+                                code: "HTML Rich Text Editor by jQuery SummerNote"
+                            })
+                            .code("HTML Rich Text Editor by jQuery SummerNote");
+                    });
+                </script> 
+                
+            </div>
+
+            <!-- <div class="field">
+                <label>Đường link</label>
+                <input type="text" th:field="*{link}" />
+            </div> -->
+
+            <div class="field">
+                <label>Ảnh</label>
+                <input type="text" th:field="*{anh}" />
+            </div>
+
+            <div class="field">
+                <label>Thứ tự</label>
+                <input type="number" th:field="*{thuTu}" />
+            </div>
+
+            <div class="field">
+                <label>Loại Cha</label>
+                <input type="text" th:field="*{loaiCha}" value="0"/>
+            </div>
+
+            <!--Các trường thông tin Boolean với checkbox -->
+
+            <div class="field inline checkbox">
+                <label>Cho Phép: </label>
+                <input type="checkbox" th:field="*{choPhep}" />
+            </div>
+
+            <div class="field inline checkbox">
+                <label>Nổi Bật: </label>
+                <input type="checkbox" th:field="*{noiBat}" />
+            </div>
+
+            <div class="field inline checkbox">
+                <label>Top (Menu): </label>
+                <input type="checkbox" th:field="*{top}" />
+            </div>
+
+            
+
+            <br />
+            <div style="overflow: auto;">
+                
+                <button type="submit" class="ui button primary" style="float: right">
+                    <i class="icon save"></i>Lưu</button>
+                <button type="reset" class="ui button" style="float: right;margin-right: 10px;">
+                    <i class="icon undo"></i>Huỷ</button>
+                <a class="ui button positive" href="/qdl/loai" style="float: right;">
+                    <i class="icon arrow left"></i>Danh Sách
+                </a>
+            </div>
+
+            <!-- <div class="ui error message"></div> -->
+
+            <!-- </fieldset> -->
+
+        </form>
+    </div>
+</div>

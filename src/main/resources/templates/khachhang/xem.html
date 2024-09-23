@@ -1,0 +1,53 @@
+<div class="ui container">
+    
+
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">
+                Form Khách Hàng
+            </h2>
+        </div>
+        <form class="ui form large segment khachhang" method="post" th:action="@{/qdl/khachhang/xem}" th:object="${dl}">
+
+            <input type="hidden" th:field="*{id}" disabled />
+
+            <div class="field">
+                <label>Tên</label>
+                <input type="text" th:field="*{ten}" disabled/>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" disabled/>
+            </div>
+
+            <div class="field">
+                <label>Phone</label>
+                <input type="tel" th:field="*{phone}" disabled/>
+            </div>
+
+            <div class="field">
+                <label>Mật Khẩu</label>
+                <input type="password" th:field="*{password}" disabled/>
+            </div>
+
+
+            <div class="field inline checkbox">
+                <label>Cho Phép: </label>
+                <input type="checkbox" th:field="*{choPhep}" disabled/>
+            </div>
+
+
+            <br />
+            <div style="overflow: auto;">
+                <a class="ui button primary" href="/qdl/khachhang" style="float: right;margin-right: 5px;">
+                    <i class="icon arrow left"></i>Quay Lại
+                </a>
+
+            </div>
+            <div class="ui error message"></div>
+
+        </form>
+    </div>
+</div>
+<input type="hidden" id="khachhangid" th:value="${khachhang.id}">

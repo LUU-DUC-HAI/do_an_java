@@ -1,0 +1,117 @@
+<div class="ui container">
+    <a class="ui button primary" href="/qdl/sanpham">
+        <i class="icon arrow left"></i>Quay Lại Danh Sách</a>
+
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">
+                Form Sản Phẩm
+            </h2>
+        </div>
+        <form class="ui form large segment sanpham" method="post" th:action="@{/qdl/sanpham/sua}" th:object="${dl}">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="field">
+                <label>Tên Sản Phẩm</label>
+                <input type="text" th:field="*{ten}" placeholder="" />
+            </div>
+
+            <div class="field">
+                <label>Model</label>
+                <input type="text" th:field="*{model}" placeholder="" />
+            </div>
+
+            <div class="field">
+                <label>Đơn Giá</label>
+                <input type="text" th:field="*{donGia}" placeholder="" />
+            </div>
+
+            <div class="field">
+                <label>Mô tả (SummerNote)</label>
+
+                <textarea th:field="*{moTa}" class="summernote" placeholder="Mô tả chi tiết sản phẩm"></textarea>
+
+                <script>
+                    $(function () {
+                        $('[name="moTa"]')
+                            .summernote({
+                                // cần tùy chỉnh thì viết vào đây
+                                height: 150,
+                                code: "HTML Rich Text Editor by jQuery SummerNote"
+                            })
+                            .code("HTML Rich Text Editor by jQuery SummerNote");
+                    });
+                </script>
+            </div>
+            <div class="field">
+                <label>Tag</label>
+                <input type="text" th:field="*{tag}" placeholder="" />
+            </div>
+
+            <div class="field">
+                <label>Ảnh</label>
+                <input type="text" th:field="*{anh}" style="height: 100px;" placeholder="" />
+            </div>
+
+
+            <div class="field">
+                <label>Mã Nhà Sản Xuất</label>
+                <div class="col-sm-10">
+                    <select id="maNhaSanXuat" th:field="*{maNhaSanXuat}" required>
+                        <option value="">Chọn nhà sản xuất</option>
+                        <option th:each="nsx : ${dsNhaSanXuat}" th:value="${nsx.id}" th:text="${nsx.ten}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="maLoai">Mã Loại</label>
+                <div class="col-sm-10">
+                    <select id="maLoai" th:field="*{maLoai}" required>
+                        <option value="">Chọn loại</option>
+                        <option th:each="loai : ${dsLoai}" th:value="${loai.id}" th:text="${loai.ten}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- <label>Ngày Tạo</label> -->
+            <!-- <input type="date" name="ngayTao" id="ngayTao" hidden th:value="${dl.ngayTaoSQL}" /> -->
+            <input type="text" th:value="${dl.ngayTaoSQL != null ? dl.ngayTaoSQL : ''}" readonly />
+
+            <div class="field inline">
+                <label>Ngày Hết Hạn</label>
+                <input type="date" name="ngayHetHan" id="ngayHetHan" th:value="${dl.ngayHetHanSQL}" />
+            </div>
+
+            <div class="field inline checkbox">
+                <label>Cho Phép: </label>
+                <input type="checkbox" th:field="*{choPhep}" />
+            </div>
+
+            <div class="field inline checkbox">
+                <label>Nổi Bật: </label>
+                <input type="checkbox" th:field="*{noiBat}" />
+            </div>
+
+            <div class="field inline checkbox">
+                <label>Bán Chạy: </label>
+                <input type="checkbox" th:field="*{banChay}" />
+            </div>
+
+            <br />
+            <div style="overflow: auto;">
+                <button type="submit" class="ui button primary" style="float: right">Lưu</button>
+
+                <button type="reset" class="ui button" style="float: right;margin-right: 10px;">Huỷ</button>
+
+            </div>
+
+            <!-- <div class="ui error message"></div> -->
+
+            <!-- </fieldset> -->
+
+        </form>
+    </div>
+</div>
+

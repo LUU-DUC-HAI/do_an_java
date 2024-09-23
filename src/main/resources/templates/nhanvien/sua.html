@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <style>
+        .custom-form {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .custom-form fieldset {
+            border: none;
+        }
+        .custom-form label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .custom-form button {
+            margin-top: 15px;
+        }
+        .dk{   
+           margin-left: 160px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ui container custom-form">
+        <form method="post" th:action="@{/qdl/nhanvien/sua}" th:object="${dl}" class="ui form">
+            <h2 class="dk"> Sửa  Nhân Viên</h2>
+            <fieldset>
+                <div class="field">
+                    <label for="fullName">Tên Đầy Đủ</label>
+                    <input type="text" id="fullName" th:field="*{TenDayDu}" placeholder="Nhập tên đầy đủ">
+                </div>
+
+                <div class="field">
+                    <label for="username">Tên Đăng Nhập</label>
+                    <input type="text" id="username" th:field="*{TenDangNhap}" placeholder="Nhập tên đăng nhập">
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{Email}" placeholder="Nhập email">
+                </div>
+
+                <div class="field">
+                    <label for="password">Mật Khẩu</label>
+                    <input type="password" id="password" th:field="*{MatKhau}" placeholder="Nhập mật khẩu">
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Xác Nhận Mật Khẩu</label>
+                    <input type="password" id="confirmPassword" th:field="*{xacNhanMatKhau}" placeholder="Nhập lại mật khẩu">
+                </div>
+
+                <div class="field">
+                    <label for="avatar">Ảnh Đại Diện</label>
+                    <input type="text" id="avatar" th:field="*{AnhDaiDien}" placeholder="Nhập URL ảnh đại diện">
+                </div>
+
+                <div class="field">
+                    <label for="status">Trạng Thái</label>
+                    <select id="status" th:field="*{TrangThai}" class="ui dropdown">
+                        <option value="1">Cho Phép</option>
+                        <option value="0">Không Cho Phép</option>
+                    </select>
+                </div>
+                
+                <input type="date" name="ngayTao" id="ngayTao" hidden th:value="${dl.ngayTaoSQL}"/>
+
+                <div class="field">
+                    <label for="ngayHetHan">Ngày Hết Hạn</label>
+                    <input type="date" name="ngayHetHan" id="ngayHetHan" th:field="*{ngayHetHanSQL}">
+                </div>
+
+                <div class="field">
+                    <label for="description">Mô Tả</label>
+                    <textarea id="description" th:field="*{moTa}" cols="30" rows="3" placeholder="Nhập mô tả"></textarea>
+                </div>
+
+                <div class="field">
+                    <button type="submit" class="ui primary button">Lưu</button>
+                    <button type="reset" class="ui button">Huỷ</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+</html>

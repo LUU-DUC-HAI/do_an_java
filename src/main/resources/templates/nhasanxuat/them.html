@@ -1,0 +1,92 @@
+<div class="ui container">
+    <div class="ui segments">
+        <div class="ui segment">
+            <h2 class="ui header">Nhà Sản Xuất</h2>
+        </div>
+        
+        <form class="ui form large segment nhasanxuat" method="post" th:action="@{/qdl/nhasanxuat/them}" th:object="${dl}">
+            <input type="hidden" th:field="*{id}" disabled />
+            
+            <!-- Tên -->
+            <div class="form-group">
+                <label for="ten">Tên</label>
+                <input type="text" id="ten" th:field="*{ten}" class="bs4 form-control" placeholder="Nhập tên nhà sản xuất"/>
+            </div>
+            
+            <!-- Ảnh -->
+            <div class="form-group">
+                <label for="anh">Ảnh</label>
+                <input type="text" id="anh" th:field="*{anh}" class="bs4 form-control" placeholder="http://example.com/image.jpg" />
+            </div>
+            
+            <!-- Thứ tự -->
+            <!-- <div class="form-group">
+                <label for="thuTu">Thứ tự</label>
+                <input type="number" id="thuTu" th:field="*{thuTu}" class="bs4 form-control" placeholder="Nhập thứ tự hiển thị" />
+            </div> -->
+            
+            <!-- Mô Tả -->
+            <!-- <div class="form-group">
+                <label for="moTa">Mô Tả</label>
+                <input type="text" id="moTa" th:field="*{moTa}" class="bs4 form-control" placeholder="Nhập mô tả nhà sản xuất" />
+            </div> -->
+            
+            <!-- Đường link -->
+            <div class="form-group">
+                <label for="link">Đường link</label>
+                <input type="text" id="link" th:field="*{link}" class="bs4 form-control" placeholder="Nhập đường link website" />
+            </div>
+            
+            <!-- Cho phép checkbox -->
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" id="choPhep" th:field="*{choPhep}">
+                    <label for="choPhep">Cho Phép</label>
+                </div>
+            </div>
+            
+            <script>
+                $(document).ready(function() {
+                    $('.ui.checkbox').checkbox(); // Initialize the Semantic UI checkbox
+                });
+            </script>
+            
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="ui button primary">
+                    <i class="icon save"></i> Lưu
+                </button>
+                
+                <button type="reset" class="ui button mx-2" href="/qdl/nhasanxuat">
+                    <i class="icon trash"></i> Huỷ
+                </button>
+
+                <a class="ui button primary" href="/qdl/nhasanxuat">
+                    <i class="icon arrow left"></i> Quay Lại
+                </a>
+            </div>
+            
+            <!-- Error message container -->
+            <div class="ui error message"></div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Custom rules using Semantic-UI
+    $.fn.form.settings.rules.greaterThan = function (inputValue, validationValue) {
+        return inputValue >= validationValue;
+    };
+    $.fn.form.settings.rules.lessThan = function (inputValue, validationValue) {
+        return inputValue <= validationValue;
+    }
+
+    $(function () {
+        $('.ui.form.nhasanxuat').form({
+            fields: {
+                // Custom validation can be added here
+            }
+        });
+    });
+</script>

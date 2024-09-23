@@ -1,0 +1,34 @@
+<!-- <div th:fragment="content">
+    <h2>Xác nhận xóa sản phẩm</h2>
+    <p>Bạn có chắc chắn muốn xóa sản phẩm sau đây?</p>
+    <p><strong th:text="${dl.ten}"></strong></p>
+    <form th:action="@{/qdl/sanpham/xoa}" method="post">
+        <input type="hidden" name="id" th:value="${dl.id}" />
+        <button type="submit">Xác nhận xóa</button>
+        <a th:href="@{/qdl/sanpham/duyet}">Hủy</a>
+    </form>
+</div> -->
+<div th:fragment="content" class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h2>Xác nhận xóa sản phẩm</h2>
+        </div>
+        <div class="card-body">
+            <p>Bạn có chắc chắn muốn xóa sản phẩm sau đây?</p>
+            <p><strong th:text="${dl.ten}"></strong></p>
+
+            <form th:action="@{/qdl/sanpham/xoa}" method="post">
+                <input type="hidden" name="id" th:value="${dl.id}" />
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger me-3">
+                        Xác nhận xóa
+                    </button>
+                    <a th:href="@{/qdl/sanpham/duyet}" class="btn btn-secondary">
+                        Hủy
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

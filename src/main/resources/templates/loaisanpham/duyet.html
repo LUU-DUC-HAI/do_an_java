@@ -1,0 +1,108 @@
+<div class="ui" style="padding: 2%;">
+
+    <div class="ui positive message" th:if="${session.message}">
+        <i class="close icon"></i>
+        <div class="header" th:text="${session.message}">
+            You are eligible for a reward
+        </div>
+        <p>Bạn có thể tiếp tục các tác vụ khác được rồi.</p>
+        <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+    </div>
+
+    <a href="#" class="ui button primary" th:href="@{/qdl/loaisanpham/them}">
+        <i class="icon plus circle"></i>Thêm Mới
+    </a>
+
+
+    <table class="ui table celled">
+        <caption>
+            <h2>Loại Sản Phẩm</h2>
+        </caption>
+        <thead>
+            <tr>
+                <th colspan="11">
+                    <div class="ui buttons">
+                        <button class="ui button positive"><i class="icon plus"></i>Thêm</button>
+                        <button class="ui button yellow"><i class="icon pencil"></i>Sửa</button>
+                        <button class="ui button negative"><i class="icon trash"></i>Xóa</button>
+                        <button class="ui button"><i class="icon eye"></i>Xem</button>
+                        <button class="ui button primary modal-control"><i class="icon plus circle"></i>Modal</button>
+                    </div>
+                    <form action="timkiem.php" method="post" style="float: right;">
+                        <div class="ui icon input ">
+                            <i class="search icon"></i>
+                            <input type="text" placeholder="Search...">
+                        </div>
+                    </form>
+
+                 
+                </th>
+            </tr>
+            <tr>
+
+                
+                <th>Id</th>
+                <th>Tên Loại</th>                
+                <th>Tên Sản Phẩm</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            
+            <tr th:each="dl : ${ds}">
+                <td th:text="${dl.id}"></td>
+                <td th:text="${dl.loai.ten}"></td>
+                <td th:text="${dl.sanPham.ten}"></td>
+                
+                
+                <td>
+                    <a th:href="@{/qdl/loaisanpham/xem/{id}(id=${dl.id})}" class="ui button positive">
+                        <i class="icon eye"></i>Xem</a> <!-- /loaisanpham/xem/3 -->
+                    &nbsp;
+                    <a th:href="@{/qdl/loaisanpham/sua(id=${dl.id})}" class="ui button yellow">
+                        <i class="icon pencil"></i>Sửa</a> <!-- /loaisanpham/sua?id=3 -->
+                    &nbsp;
+                    <a th:href="@{/qdl/loaisanpham/xoa(id=${dl.id})}" class="ui button negative">
+                        <i class="icon trash"></i>Xoá</a><!-- /loaisanpham/xoa?id=3 -->
+                    &nbsp;
+                    <a th:href="@{/qdl/loaisanpham/copy(id=${dl.id})}" class="ui button purple basic">
+                        <i class="icon copy"></i>Copy</a><!-- /loaisanpham/xoa?id=3 -->
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th colspan="11">
+                    <div class="ui right floated pagination menu">
+                        <a class="icon item">
+                            <i class="left chevron icon"></i>
+                        </a>
+                        <a class="item">1</a>
+                        <a class="item">2</a>
+                        <a class="item">3</a>
+                        <a class="item">4</a>
+                        <a class="icon item">
+                            <i class="right chevron icon"></i>
+                        </a>
+                    </div>
+                    <!-- <div class="ui left floated" style="float: left">
+                            Page 3 of 16 (91 items)
+                        </div> -->
+                    <div class="ui left floated" style="float: left">
+                        Page 3 of 16 (91 items) &nbsp;
+                        Page Size:
+                        <select class="ui dropdown">
+                            <option>3</option>
+                            <option>5</option>
+                            <option>7</option>
+                        </select>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
