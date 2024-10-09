@@ -95,53 +95,112 @@ public class QdlGioHang {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/giohang/sua/ajax", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/sua/ajax", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> postGioHangSuaAjax(Model model,
             @RequestParam("id_sanpham") int id,
             @RequestParam("so_luong") int soluong,
             @RequestParam("ten") String ten) {
-        if (session.getAttribute("cart") == null) {
-            session.setAttribute("cart", new HashMap<Integer, Integer>());
-            session.setAttribute("SoSanPhamTrongGioHang", 0);
+        // ... existing code ...
+
+        Map<Integer, Integer> cartMap = getCartFromSession(); // Lấy giỏ hàng từ session
+
+        if (cartMap == null) {
+            cartMap = new HashMap<>(); // Khởi tạo nếu cartMap là null
         }
-
-        @SuppressWarnings("unchecked")
-        Map<Integer, Integer> cartMap = (Map<Integer, Integer>) session.getAttribute("cart");
-        Integer cartQuantity = (Integer) session.getAttribute("SoSanPhamTrongGioHang");
-
-        // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng mới
-        if (cartMap.containsKey(id)) {
-            int so_luong_cu = cartMap.get(id);
-            cartMap.put(id, soluong);
-            cartQuantity += (soluong - so_luong_cu);
-        } else {
-            // Nếu sản phẩm mới được thêm vào giỏ hàng
-            cartMap.put(id, soluong);
-            cartQuantity += soluong;
-        }
-
-        session.setAttribute("SoSanPhamTrongGioHang", cartQuantity);
-
-        // Cập nhật giỏ hàng trong Session
-        session.setAttribute("cart", cartMap);
-
-        System.out.println("Đã cập nhật giỏ hàng với sản phẩm id: " + id);
-
         // Tính tổng giá trị giỏ hàng
         double tongGiaTri = 0.0;
         for (Map.Entry<Integer, Integer> entry : cartMap.entrySet()) {
             int productId = entry.getKey();
             int quantity = entry.getValue();
-            // Giả sử bạn có phương thức để lấy giá sản phẩm theo ID
-            double price = getPriceById(productId); // Phương thức này bạn cần định nghĩa
-            tongGiaTri += price * quantity;
+            double price = getPriceById(productId); // Lấy giá sản phẩm theo ID
+            tongGiaTri += price * quantity; // Cộng dồn tổng giá trị
         }
 
         // Gửi dữ liệu JSON trở lại cho View
         Map<String, Object> data = new HashMap<>();
         data.put("success", "Đã cập nhật giỏ hàng, số lượng mới cho sản phẩm " + ten);
-        data.put("total", cartQuantity);
+        data.put("total", soluong);
         data.put("tongGiaTri", tongGiaTri); // Thêm tổng giá trị vào response
+
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    // @PostMapping(path = "/giohang/sua/ajax", produces =
+    // MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<Object> postGioHangSuaAjax(Model model,
+    // @RequestParam("id_sanpham") int id,
+    // @RequestParam("so_luong") int soluong,
+    // @RequestParam("ten") String ten) {
+    // if (session.getAttribute("cart") == null) {
+    // session.setAttribute("cart", new HashMap<Integer, Integer>());
+    // session.setAttribute("SoSanPhamTrongGioHang", 0);
+    // }
+
+    // @SuppressWarnings("unchecked")
+    // Map<Integer, Integer> cartMap = (Map<Integer, Integer>)
+    // session.getAttribute("cart");
+    // Integer cartQuantity = (Integer)
+    // session.getAttribute("SoSanPhamTrongGioHang");
+
+    // // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng mới
+    // if (cartMap.containsKey(id)) {
+    // int so_luong_cu = cartMap.get(id);
+    // cartMap.put(id, soluong);
+    // cartQuantity += (soluong - so_luong_cu);
+    // } else {
+    // // Nếu sản phẩm mới được thêm vào giỏ hàng
+    // cartMap.put(id, soluong);
+    // cartQuantity += soluong;
+    // }
+
+    // session.setAttribute("SoSanPhamTrongGioHang", cartQuantity);
+
+    // // Cập nhật giỏ hàng trong Session
+    // session.setAttribute("cart", cartMap);
+
+    // System.out.println("Đã cập nhật giỏ hàng với sản phẩm id: " + id);
+
+    // // Tính tổng giá trị giỏ hàng
+    // double tongGiaTri = 0.0;
+    // for (Map.Entry<Integer, Integer> entry : cartMap.entrySet()) {
+    // int productId = entry.getKey();
+    // int quantity = entry.getValue();
+    // // Giả sử bạn có phương thức để lấy giá sản phẩm theo ID
+    // double price = getPriceById(productId); // Phương thức này bạn cần định nghĩa
+    // tongGiaTri += price * quantity;
+    // }
+
+    // // Gửi dữ liệu JSON trở lại cho View
+    // Map<String, Object> data = new HashMap<>();
+    // data.put("success", "Đã cập nhật giỏ hàng, số lượng mới cho sản phẩm " +
+    // ten);
+    // data.put("total", cartQuantity);
+    // data.put("tongGiaTri", tongGiaTri); // Thêm tổng giá trị vào response
+
+    // return new ResponseEntity<>(data, HttpStatus.OK);
+    // }
+
+    @PostMapping(path = "/xoa/ajax", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> postGioHangXoaAjax(
+            @RequestParam("id_sanpham") int id,
+            @RequestParam("ten") String ten) {
+
+        Map<Integer, Integer> cartMap = getCartFromSession();
+        Integer cartQuantity = (Integer) session.getAttribute("SoSanPhamTrongGioHang");
+
+        if (cartMap.containsKey(id)) {
+            cartQuantity -= cartMap.get(id); // Giảm số lượng sản phẩm trong giỏ hàng
+            cartMap.remove(id); // Xóa sản phẩm khỏi giỏ hàng
+        } else {
+            return new ResponseEntity<>("Sản phẩm không tồn tại trong giỏ hàng", HttpStatus.BAD_REQUEST);
+        }
+
+        session.setAttribute("cart", cartMap);
+        session.setAttribute("SoSanPhamTrongGioHang", cartQuantity);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", "Đã xóa sản phẩm " + ten + " khỏi giỏ hàng.");
+        data.put("total", demSanPhamTrongGioHang()); // Cập nhật tổng số sản phẩm trong giỏ hàng
 
         return new ResponseEntity<>(data, HttpStatus.OK);
     }

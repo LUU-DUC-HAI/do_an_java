@@ -47,19 +47,25 @@ var cart = {
                 
                 // Cập nhật tổng giá trị giỏ hàng
                 $('#total-value').text(json['tongGiaTri']); // Cập nhật tổng giá trị hiển thị
-                toastr.success(json['success'], 'Cập nhật giỏ hàng thành công');
+                
+                // Cập nhật tổng tiền cho sản phẩm
+                var newSubtotal = (json['tongGiaTri'] / json['total']) * so_luong; // Tính tổng tiền mới
+                $('#subtotal-' + id_sanpham).text(newSubtotal + ' đ'); // Cập nhật tổng tiền cho sản phẩm
             },
             error: function () {
-                alert('Có lỗi xảy ra khi cập nhật giỏ hàng.');
+                console.error("Lỗi AJAX:", status, error);
+                alert("Lỗi khi gửi yêu cầu: " + error);
             }
         });
     },
     remove: function (id_sanpham, ten) {
+        console.log("ID sản phẩm:", id_sanpham);
+        console.log("Tên sản phẩm:", ten);
         $.ajax({
             url: '/giohang/xoa/ajax',
             type: 'POST',
             data: {
-                id_sanpham: id_sanpham,
+                id_sanpham: id_sanpham, // Đảm bảo id_sanpham là số
                 ten: ten
             },
             dataType: 'json',

@@ -14,10 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import springboo.jsb_web.qdl.Qdl;
 
-
 @Controller
 public class QdlDonHang {
-    
+
     @Autowired
     private DvlDonHang dvl; // Đổi tên biến cho dễ hiểu
 
@@ -30,7 +29,7 @@ public class QdlDonHang {
         model.addAttribute("dl", new DonHang()); // Nếu cần sử dụng trong form
 
         model.addAttribute("content", "donhang/duyet.html"); // Tệp HTML bạn muốn hiển thị
-        return "layout/layout.html"; 
+        return "layout/layout.html";
     }
 
     @GetMapping("/qdl/donhang/them")
@@ -58,6 +57,17 @@ public class QdlDonHang {
         redirectAttributes.addFlashAttribute("THONG_BAO_OK", "Đã thêm mới thành công!");
         return "redirect:/qdl/donhang";
     }
-    
-    
+
+    // @PostMapping("/luu")
+    // public String luuDonHang(@ModelAttribute("donHang") DonHang donHang, Model model) {
+    //     // Lưu thông tin đơn hàng vào cơ sở dữ liệu
+    //     DonHang donHangMoi = dvl.luuDonHang(donHang);
+
+    //     // Thêm đơn hàng vào model để hiển thị sau khi lưu thành công
+    //     model.addAttribute("donHang", donHangMoi); // Đảm bảo rằng donHangMoi được thêm vào model
+
+    //     // Chuyển hướng sang trang xác nhận đơn hàng
+    //     return "trangchu/xacnhan-donhang"; // Đảm bảo đường dẫn đúng đến trang xác nhận
+    // }
+
 }
